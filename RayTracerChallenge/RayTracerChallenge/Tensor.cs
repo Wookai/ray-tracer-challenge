@@ -44,9 +44,9 @@
 
         public override readonly string ToString() => String.Format("{3}({0}, {1}, {2})", x, y, z, IsPoint() ? "Point" : "Vector");
 
-        public static Tensor Point(float x, float y, float z) => new Tensor(x, y, z, POINT_W);
+        public static Tensor Point(float x, float y, float z) => new(x, y, z, POINT_W);
 
-        public static Tensor Vector(float x, float y, float z) => new Tensor(x, y, z, VECTOR_W);
+        public static Tensor Vector(float x, float y, float z) => new(x, y, z, VECTOR_W);
 
         public static Tensor operator +(Tensor a, Tensor b)
         {
@@ -78,7 +78,7 @@
             return Vector(-a.x, -a.y, -a.z);
         }
 
-        public static Tensor operator *(Tensor a, float f) => new Tensor(a.x * f, a.y * f, a.z * f, a.w * f);
+        public static Tensor operator *(Tensor a, float f) => new(a.x * f, a.y * f, a.z * f, a.w * f);
         public static Tensor operator *(float f, Tensor a) => a * f;
         public static Tensor operator /(Tensor t, float f) => t * (1 / f);
 

@@ -37,14 +37,33 @@
 
         static void Main(string[] args)
         {
-            var projectile = new Projectile(Tensor.Point(0, 1, 0), Tensor.Vector(1, 1, 0).Normalize() * 3);
-            var enviroment = new Enviroment(Tensor.Vector(0, -0.1f, 0), Tensor.Vector(-0.01f, 0, 0));
+            var start = Tensor.Point(0, 1, 0);
+            var velocity = Tensor.Vector(1, 1.8f, 0).Normalize() * 11.25f;
+            var projectile = new Projectile(start, velocity);
+
+            var gravity = Tensor.Vector(0, -0.1f, 0);
+            var wind = Tensor.Vector(-0.01f, 0, 0);
+            var environment = new Enviroment(gravity, wind);
+
+            int width = 900;
+            int height = 550;
+            var canvas = new Canvas(width, height);
+
+            var color = new Color(0, 1, 0);
 
             while (projectile.position.y >= 0)
             {
-                Console.WriteLine(projectile);
-                projectile = Tick(enviroment, projectile);
+                int x = (int)Math.Round(projectile.position.x);
+                int y = (int)Math.Round(height - projectile.position.y);
+
+                if (0 <= x && x < width && 0 <= y && y < height)
+                {
+                    canvas.WritePixel(x, y, color);
+                }
+                projectile = Tick(environment, projectile);
             }
+
+            File.WriteAllText("image.ppm", canvas.ToPPM());
         }
     }
 }

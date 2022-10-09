@@ -25,6 +25,8 @@ namespace RayTracerChallenge
 
         public override int GetHashCode() => Tuple.Create(red, green, blue).GetHashCode();
 
+        public string ToRGB() => string.Join(' ', new List<float>() { red, green, blue }.Select(v => string.Format("{0:0.}", Math.Clamp(v * 255, 0, 255))));
+
         public static Color operator +(Color a, Color b) => new(a.red + b.red, a.green + b.green, a.blue + b.blue);
         public static Color operator -(Color a, Color b) => new(a.red - b.red, a.green - b.green, a.blue - b.blue);
         public static Color operator *(Color a, float b) => new(a.red * b, a.green * b, a.blue * b);

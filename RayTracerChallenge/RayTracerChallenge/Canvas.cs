@@ -25,12 +25,25 @@ namespace RayTracerChallenge
         public void WritePixel(int x, int y, Color c) => pixels[x, y] = c;
         public Color GetPixel(int x, int y) => pixels[x, y];
 
+        private readonly int MAX_LINE_LENGTH = 70;
+
         public string ToPPM()
         {
             StringBuilder sb = new();
             sb.Append("P3\n");
             sb.AppendFormat("{0} {1}\n", Width, Height);
             sb.Append("255\n");
+            for (int y = 0; y < Height; y++)
+            {
+                var line = string.Join(' ', Enumerable.Range(0, Width).Select(i => pixels[i, y].ToRGB()));
+                while (line.Length > MAX_LINE_LENGTH)
+                {
+                    int lastSpacePosition = line[..MAX_LINE_LENGTH].LastIndexOf(' ');
+                    sb.Append(line[..lastSpacePosition] + '\n');
+                    line = line[(lastSpacePosition + 1)..];
+                }
+                sb.Append(line + '\n');
+            }
             return sb.ToString();
         }
     }

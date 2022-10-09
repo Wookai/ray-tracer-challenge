@@ -58,5 +58,11 @@ namespace Tests
             Assert.AreEqual(0.2f, product.green, 1e-3);
             Assert.AreEqual(0.04f, product.blue, 1e-3);
         }
+
+        [TestMethod]
+        public void TestToRGB()
+        {
+            Assert.AreEqual("0 128 255", new Color(0, 0.5f, 1.5f).ToRGB());
+        }
     }
 }

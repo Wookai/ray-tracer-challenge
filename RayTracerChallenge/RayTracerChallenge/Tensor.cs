@@ -25,7 +25,6 @@
         // override object.Equals
         public override readonly bool Equals(object? obj)
         {
-
             if (obj == null || GetType() != obj.GetType())
             {
                 return false;

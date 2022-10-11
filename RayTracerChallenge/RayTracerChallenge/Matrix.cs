@@ -103,5 +103,43 @@ namespace RayTracerChallenge
             }
             return transpose;
         }
+
+        public float Determinant()
+        {
+            if (Rows != 2 || Columns != 2)
+            {
+                throw new InvalidOperationException(string.Format("Only determinant of 2x2 matrices is implemented, tried to compute determinant of {0}x{1} matrix", Rows, Columns));
+            }
+            return Data[0, 0] * Data[1, 1] - Data[0, 1] * Data[1, 0];
+        }
+
+        /// <summary>
+        /// Returns a copy of this matrix with row <paramref name="row"/> and column <paramref name="column"/> removed.
+        /// </summary>
+        /// <param name="row"></param>
+        /// <param name="column"></param>
+        /// <returns></returns>
+        public Matrix Submatrix(int row, int column)
+        {
+            var submatrix = new Matrix(Rows - 1, Columns - 1);
+            for (int i = 0; i < Rows; i++)
+            {
+                if (i == row)
+                {
+                    continue;
+                }
+
+                for (int j = 0; j < Columns; j++)
+                {
+                    if (j == column)
+                    {
+                        continue;
+                    }
+
+                    submatrix.Data[i >= row ? i - 1 : i, j >= column ? j - 1 : j] = Data[i, j];
+                }
+            }
+            return submatrix;
+        }
     }
 }

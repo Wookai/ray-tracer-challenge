@@ -99,5 +99,21 @@ namespace Tests
             Assert.AreEqual(new Matrix(new float[4, 4] { { 1, 5, 9, 13 }, { 2, 6, 10, 14 }, { 3, 7, 11, 15 }, { 4, 8, 12, 16 } }), a.Transpose());
             Assert.AreEqual(Matrix.Identity(), Matrix.Identity().Transpose());
         }
+
+        [TestMethod]
+        public void DeterminantTest()
+        {
+            Assert.AreEqual(17, new Matrix(new float[2, 2] { { 1, 5 }, { -3, 2 } }).Determinant());
+            Assert.ThrowsException<InvalidOperationException>(() => new Matrix(2, 3).Determinant());
+        }
+
+        [TestMethod]
+        public void SubmatrixTest()
+        {
+            Assert.AreEqual(new Matrix(new float[2, 2] { { -3, 2 }, { 0, 6 } }),
+                new Matrix(new float[3, 3] { { 1, 5, 0 }, { -3, 2, 7 }, { 0, 6, -3 } }).Submatrix(0, 2));
+            Assert.AreEqual(new Matrix(new float[3, 3] { { -6, 1, 6 }, { -8, 8, 6 }, { -7, -1, 1 } }),
+                new Matrix(new float[4, 4] { { -6, 1, 1, 6 }, { -8, 5, 8, 6 }, { -1, 0, 8, 2 }, { -7, 1, -1, 1 } }).Submatrix(2, 1));
+        }
     }
 }

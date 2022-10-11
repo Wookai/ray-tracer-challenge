@@ -22,6 +22,11 @@ namespace RayTracerChallenge
             Data = data;
         }
 
+        public static Matrix Identity()
+        {
+            return new Matrix(new float[4, 4] { { 1, 0, 0, 0 }, { 0, 1, 0, 0 }, { 0, 0, 1, 0 }, { 0, 0, 0, 1 } });
+        }
+
         public override bool Equals([NotNullWhen(true)] object? obj)
         {
             if (obj == null || GetType() != obj.GetType())
@@ -86,9 +91,17 @@ namespace RayTracerChallenge
             return new Tensor(values[0], values[1], values[2], values[3]);
         }
 
-        public static Matrix Identity()
+        public Matrix Transpose()
         {
-            return new Matrix(new float[4, 4] { { 1, 0, 0, 0 }, { 0, 1, 0, 0 }, { 0, 0, 1, 0 }, { 0, 0, 0, 1 } });
+            var transpose = new Matrix(Columns, Rows);
+            for (int i = 0; i < Rows; i++)
+            {
+                for (int j = 0; j < Columns; j++)
+                {
+                    transpose.Data[j, i] = Data[i, j];
+                }
+            }
+            return transpose;
         }
     }
 }
